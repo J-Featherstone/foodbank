@@ -49,7 +49,30 @@ class database extends mysqli {
 		die('Error (' . $this->errno . ') ' . $this->error);
 	}
 	
+        //the column names are the keys in $row array and the values are the contents of the respective columns
+	private function get_row ($row_array, $table_name) {
+            $row = null;
+            foreach ($row_array as $key=>$value) {
+                if ($row == null) {
+                    $row .= $key.' = "'.$value.'"';
+                }else {
+                    $row = ' and ' . $key . ' = "' . $value . '"';
+                }
+            }
+            $sql = "SELECT * FROM ".$table_name. " where ". $row;
+	}
 	
-
+       /* private function column_names_to_array($table_name) {
+             $result = mysql_query("SHOW COLUMNS FROM " . $table_name);
+                if (!$result) {
+                    echo 'Could not run query: ' . mysql_error();
+                    exit;
+                }
+            if (mysql_num_rows($result) > 0) {
+                while ($row = mysql_fetch_assoc($result)) {
+                print_r($row);
+                }
+            }
+        }*/
 }
 ?>

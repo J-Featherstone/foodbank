@@ -14,14 +14,16 @@ $table = "list_for_menu";
 
 $used = new database($host, $username, $password, $database_name);
 
-
-
 $category_array = $used->get_categories($table);
 
 //print_r($category_array);
 $processed = $format->process_mysqli_array($category_array);
 
-$position = array("Canned");
+if (!isset($_GET["choice"])) {
+	$position = array();
+} else {
+	$position[] = $_GET["choice"];
+}
 
 //print_r($processed);
 
@@ -68,8 +70,19 @@ if (isset($_GET['choice2'])) {
 //$choice2 = $_POST['choice2'];
 //echo $choice2 . " " . $choice;
 //
-$interface->menu_2($processed, $position);
 
+if (!isset($_GET["choice"])) {
+	$level = $interface->check_level($position, $processed);
+	$interface->menu_2($level);
+}elseif (in_array ($_GET["choice"], $position) && count($position) <  3) {
+	$level2 = $interface->check_level($position, $processed);
+	print_r($level2);
+	$interface->menu_2($level2);
+} elseif (in_array ($_GET["choice"], $position) && count($position) ==  3) {
+	$level3 = $interface->check_level($position, $processed);
+	$interface->menu_2($level3);
+}
+echo phpinfo();
 echo "</body>";
 echo "</html>";
 

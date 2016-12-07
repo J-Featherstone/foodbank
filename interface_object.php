@@ -32,25 +32,35 @@ class layout {
 		echo "</form>";
 	}
 	
-	public function menu_2($processed_array, $position_array) {
-		$level = self::check_level($processed_array, $position_array);
-		print_r($level);
-		/*echo "<form action='testing_mysqli.php' method='GET'>";
+	public function menu_2($level) {
+		//$level = self::check_level($processed_array, $position_array);
+		//print_r($level);
+		echo "<form action='testing_mysqli.php' method='GET'>";
 		foreach($level as $key=>$value) {
-			echo "<button type='submit' name='choice' value='" . $value . "' class='button'>" . $value . "</button>";
+			echo "<button type='submit' name='choice' value='" . $key . "' class='button'>" . $key . "</button>";
 		}
-		echo "</form>";*/
+		echo "</form>";
 	}
 
 
 	//position_array is an array with the keys of the button array being inserted as a reference point
 	public function check_level($position_array, $main_array) {
 		$level = $main_array;
+		$back = "back";
 		foreach ($position_array as $value) {
 			$level = $level[$value];
 		}
+		//$level[] = $back;
 		return $level;
 
+	}
+	
+	public function weights_menu($level) {
+		echo "<form action='testing_mysqli.php' method='GET'>";
+		foreach($level as $key=>$value) {
+			echo "<button type='submit' name='choice' value='" . $value . "' class='button'>" . $value . "</button>";
+		}
+		echo "</form>";
 	}
 	
 }

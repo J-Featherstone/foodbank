@@ -1,6 +1,7 @@
 <?php
 
 
+
 class format {
 	
 	//put in a date with various different formats and this will convert it to a standard one.
@@ -56,6 +57,23 @@ class format {
 		}
 		return $new_array;
 	}
+	
+        //convert an excel spreadsheet into an array that can be put into the database
+	public function process_excel($filename) {
+            $row = 1;
+            if (($handle = fopen($filename, "r")) !== FALSE) {
+                while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                    $num = count($data);
+                    echo "<p> $num fields in line $row: <br /></p>\n";
+                    $row++;
+                    for ($c=0; $c < $num; $c++) {
+                        echo $data[$c] . "<br />\n";
+                    }
+                }
+                fclose($handle);
+            }
+            
+        }
 	
 	
 }
